@@ -3,7 +3,7 @@ const app = express();
 var methodOverride = require('method-override');
 const path = require('path');
 const cors = require('cors');
-const con = require('./config/db.js');
+// const con = require('./config/db.js');
 const expressValidator = require('express-validator');
 
 app.use(expressValidator());
@@ -23,10 +23,10 @@ app.use(function(req, res, next) {
 });
 
 // connecting route to database
-app.use(function(req, res, next) {
-	req.con = con;
-	next();
-});
+// app.use(function(req, res, next) {
+// 	req.con = con;
+// 	next();
+// });
 
 // parsing body request
 app.use(express.json());
@@ -34,10 +34,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 // include router
-const rechargeRouter = require('./routes/RechargeRouter');
+// const rechargeRouter = require('./routes/RechargeRouter');
 
 // routing
-app.use('/', rechargeRouter);
+app.use('/', function(req, res) {
+	res.send('Hello World !!!');
+});
 
 // starting server
 app.listen(3000, function() {
